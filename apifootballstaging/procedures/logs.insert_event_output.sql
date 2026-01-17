@@ -26,7 +26,7 @@ AS $$
 BEGIN
 	/* Check input parameters */
 	IF COALESCE(p_source_table, '') = '' OR p_source_id IS NULL OR COALESCE(p_topic, '') = '' THEN
-		RAISE EXCEPTION 'One or more required input parameters not set';
+		RAISE EXCEPTION 'logs.insert_event_output - One or more required input parameters not set';
 	END IF;
 
 	v_system_code = logs.get_system_code(); /* throws its own null exception */

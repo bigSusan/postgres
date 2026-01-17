@@ -19,7 +19,7 @@ AS $body$
 BEGIN
 	/* Parameters checked by child proc with the exception of p_topic */
 	IF COALESCE(p_topic, '') = '' THEN
-		RAISE EXCEPTION 'One or more required input parameters not set';
+		RAISE EXCEPTION 'logs.insert_lifecycle_audit_topic  - One or more required input parameters not set';
 	END IF;
 	/* Use the lookup to get the specific lifecycle */
 	SELECT

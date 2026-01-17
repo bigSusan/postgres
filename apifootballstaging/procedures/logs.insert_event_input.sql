@@ -12,6 +12,7 @@ DROP PROCEDURE IF EXISTS logs.insert_event_input;
 */
 
 CREATE PROCEDURE logs.insert_event_input (
+	 IN p_source_system_code	CHAR(10)
 	,IN p_event_uid 			UUID
 	,IN p_process_uid			UUID /* Nullable but needs to be passed as a message will trigger processing in some cases */
 	,IN p_topic					VARCHAR(50)
@@ -33,7 +34,7 @@ AS $BODY$
 BEGIN
 	/* Check input parameters */
 	IF COALESCE(p_source_system_code, '') = '' OR p_event_uid IS NULL OR COALESCE(p_topic, '') = '' OR p_event_utc IS NULL OR p_payload IS NULL THEN
-		RAISE EXCEPTION 'One or more required input parameters not set';
+		RAISE EXCEPTION 'logs.insert_event_input - One or more required input parameters not set';
 	END IF;
 
 	/* The minimum viable action is just to log the event */
