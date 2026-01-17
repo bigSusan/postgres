@@ -33,7 +33,7 @@ AS $body$
 BEGIN
 	/* There is something wrong with the calling app if null so fail */
 	IF p_process_uid IS NULL THEN
-		RAISE EXCEPTION 'One or more required input parameters not set';
+		RAISE EXCEPTION 'staging.process_league - One or more required input parameters not set';
 	END IF;
 
 	SELECT 
@@ -57,7 +57,7 @@ BEGIN
 		logs.process p
 	WHERE
 		p.process_id = v_process_id;
-
+		
 	/* Purely a safety measure, should never hit this point as the transaction rolled back on exception */
 	DELETE FROM staging.league
 	WHERE
@@ -174,5 +174,7 @@ BEGIN
 	   that should be dealt with upstream. */
 	EXCEPTION WHEN others THEN
 		CALL logs.update_process_log (p_process_uid, 'FAI', SQLERRM); /* Needs improving at some point */
+		/* Raise a notice */
+		RAISE NOTICE '%', SQLERRM;
 	
 END $body$;
