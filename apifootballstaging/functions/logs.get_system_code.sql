@@ -1,5 +1,15 @@
 DROP FUNCTION IF EXISTS logs.get_system_code;
 
+/*
+	Systems that communicate with each other may need to know where they have recievied
+	a message from or tell the recieving system where the originating message has come
+	from. This wraps the select logic in a function to avoid repetition of code.
+
+	History:
+	1.00 - 17/01/2026 - Nick White - Created
+
+*/
+
 CREATE FUNCTION logs.get_system_code (
 
 ) RETURNS CHAR(10) LANGUAGE plpgsql
